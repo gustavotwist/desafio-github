@@ -19,7 +19,7 @@ function App() {
 
     if(data.id) {
 
-      const isExist = repos.find(repo => repo.id === data.id)
+      const isExist = repos.find(repo => repo.id === data.id);
 
       if(!isExist) {
         setRepos((prev) => [...prev, data]);
@@ -31,12 +31,19 @@ function App() {
 
   };
 
+  const handleRemoveRepo = (id) => {
+    console.log('Removendo registro', id);
+
+    const updateRepos = repos.filter(repo => repo.id !== id);
+    setRepos(updateRepos);
+  };
+
   return (
     <Container>
       <img src={gitLogo} width={72} height={72} alt="github logo" />
       <Input value={currentRepo} onChange={(e) => setCurrentRepo(e.target.value)} />
       <Button onClick={handleSearchRepo} />
-      {repos.map((repo) => ( <ItemRepo key={repo.id} repo={repo} /> ))}
+      {repos.map((repo) => ( <ItemRepo key={repo.id} repo={repo} onRemove={handleRemoveRepo}/> ))}
       
     </Container>
   );
